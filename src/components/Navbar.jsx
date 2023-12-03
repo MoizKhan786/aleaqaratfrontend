@@ -12,7 +12,7 @@ const Navbar = ({ username }) => {
             navigate("/");
           }}
         >
-          Real Estate App
+          AleaQarat
         </div>
         <div className="text-amber-500 flex gap-5 md:gap-20 sm:gap-10 items-center">
           <h1

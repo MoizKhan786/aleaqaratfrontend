@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import Axios from "axios";
+import { API_URL } from "../service/api.service";
 
 const Register = () => {
   const formik = useFormik({
@@ -24,8 +26,24 @@ const Register = () => {
         .oneOf([Yup.ref("password"), null], "Passwords must match")
         .required("Required"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      try {
+        const response = await Axios.post(API_URL + "register-user", values, {
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = response.data;
+
+        if (response.status === 200) {
+          console.log("User registered successfully:", data);
+          alert("User has been successfully added!!");
+          navigate("/");
+        } else {
+          alert("Registration failed");
+        }
+      } catch (error) {
+        alert(error.response.data.error);
+      }
     },
   });
 

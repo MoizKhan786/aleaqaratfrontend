@@ -1,18 +1,45 @@
 import React, { useState, useEffect } from "react";
 import FilterModal from "./FilterModal";
-import { propertiesData } from "../assets/mock";
+import Axios from "axios";
+import { API_URL } from "../service/api.service";
 
 const SearchAndFilter = ({ properties, setProperties }) => {
   const [isFilterModalOpen, setFilterModalOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [filteredProperties, setFilteredProperties] = useState(propertiesData);
-  const [allProperties, setAllProperties] = useState(propertiesData);
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [allProperties, setAllProperties] = useState([]);
 
   const [filterOptions, setFilterOptions] = useState({
     priceRange: { min: "", max: "" },
     location: "",
     propertyType: "",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const authToken = localStorage.getItem("token");
+
+        const response = await Axios.get(API_URL + "/get-all-properties", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = response.data;
+        console.log(data);
+        setAllProperties(data.properties);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const newFilteredProperties = allProperties.filter((property) => {

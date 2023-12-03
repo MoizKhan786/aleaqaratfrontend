@@ -2,6 +2,9 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Navbar from "../components/Navbar";
+import Axios from "axios";
+import { API_URL } from "../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -15,6 +18,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const List = () => {
+  const navigate = useNavigate();
   const initialValues = {
     title: "",
     description: "",
@@ -24,8 +28,59 @@ const List = () => {
     type: "",
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
+  const handleSubmit = async (values) => {
+    try {
+      const fileReader = new FileReader();
+
+      fileReader.onload = async (event) => {
+        try {
+          const base64String = event.target.result;
+
+          const imageObject = {
+            data: base64String,
+            name: values.image.name,
+            mimeType: values.image.type,
+          };
+
+          console.log("Image object:", imageObject);
+          const requestBody = {
+            propertyData: {
+              title: values.title,
+              description: values.description,
+              price: values.price,
+              location: values.location,
+              type: values.type,
+            },
+            imageFile: imageObject,
+          };
+
+          const response = await Axios.post(
+            API_URL + "create-property",
+            requestBody,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + window.localStorage.getItem("token"),
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            console.log("Property listed successfully");
+            alert("Property listed successfully");
+            navigate("/");
+          } else {
+            console.error("Failed to list property");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
+      fileReader.readAsDataURL(values.image);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (

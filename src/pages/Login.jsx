@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import Axios from "axios";
+import { API_URL } from "../service/api.service";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,20 +19,15 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await fetch("/generateToken", {
-          method: "POST",
+        const response = await Axios.post(API_URL + "login-user", values, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(values),
         });
 
-        const data = await response.json();
-
-        if (response.ok) {
-          // Set token in local storage
+        if (response.status === 200) {
+          const data = response.data;
           localStorage.setItem("token", data.token);
-
           navigate("/");
         } else {
           alert("Authentication failed");

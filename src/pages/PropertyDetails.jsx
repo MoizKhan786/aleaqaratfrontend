@@ -5,6 +5,7 @@ import Axios from "axios";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { API_URL } from "../service/api.service";
+import Navbar from "../components/Navbar";
 
 const PropertyDetails = () => {
   const [dateRange, setDateRange] = useState([
@@ -80,59 +81,61 @@ const PropertyDetails = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      {console.log(property)}
-      <img
-        src={property?.property?.imageKey}
-        alt="Property Image"
-        className="w-full h-64 object-cover rounded-md mb-6"
-      />
-      <h2 className="text-3xl font-semibold mb-2">
-        {property?.property?.name}
-      </h2>
-      <p className="text-gray-600 mb-4">{property?.property?.location}</p>
-      <div className="flex items-center justify-between mb-4">
-        <p className="text-gray-700">Owner: {property?.property?.owner}</p>
-        <p className="text-green-800 uppercase font-semibold">
-          {property?.property?.type === "sale" ? "For Sale" : "For Rent"}
-        </p>
-      </div>
-      <p className="text-gray-700 mb-5">
-        Description: {property?.property?.desc}
-      </p>
-      <p className="text-2xl font-bold text-black">
-        ${property?.property?.price}
-      </p>
-      <button className="bg-green-500 text-white px-4 py-2 mt-6 rounded-md ease-in transition hover:bg-green-600">
-        Enquiry
-      </button>
-      {property?.property?.type === "rent" ? (
-        <div className="mt-5">
-          <h2 className="mt-5 flex justify-center mb-5 text-black font-bold">
-            {property?.property?.isBooked
-              ? "Property is currently booked. You can book for future dates"
-              : "Book Your Property"}
-          </h2>
-          <div className="flex flex-col gap-5 justify-center items-center">
-            <DateRangePicker
-              ranges={dateRange}
-              onChange={handleSelect}
-              direction="vertical"
-              showDateDisplay={false}
-            />
-            <button
-              onClick={handleBook}
-              className="w-full cursor-pointer bg-green-500 text-white px-4 py-2 mt-6 rounded-md ease-in transition hover:bg-green-600"
-            >
-              BOOK NOW
-            </button>
-          </div>
+    <div>
+      <Navbar />
+      <div className="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+        <img
+          src={property?.property?.imageKey}
+          alt="Property Image"
+          className="w-full h-64 object-cover rounded-md mb-6"
+        />
+        <h2 className="text-3xl font-semibold mb-2">
+          {property?.property?.name}
+        </h2>
+        <p className="text-gray-600 mb-4">{property?.property?.location}</p>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-gray-700">Owner: {property?.property?.owner}</p>
+          <p className="text-green-800 uppercase font-semibold">
+            {property?.property?.type === "sale" ? "For Sale" : "For Rent"}
+          </p>
         </div>
-      ) : (
-        <h1 className="mt-5 text-red-500 font-bold">
-          Property Currently Not Available for Rental Bookings
-        </h1>
-      )}
+        <p className="text-gray-700 mb-5">
+          Description: {property?.property?.desc}
+        </p>
+        <p className="text-2xl font-bold text-black">
+          ${property?.property?.price}
+        </p>
+        <button className="bg-green-500 text-white px-4 py-2 mt-6 rounded-md ease-in transition hover:bg-green-600">
+          Enquiry
+        </button>
+        {property?.property?.type === "rent" ? (
+          <div className="mt-5">
+            <h2 className="mt-5 flex justify-center mb-5 text-black font-bold">
+              {property?.property?.isBooked
+                ? "Property is currently booked. You can book for future dates"
+                : "Book Your Property"}
+            </h2>
+            <div className="flex flex-col gap-5 justify-center items-center">
+              <DateRangePicker
+                ranges={dateRange}
+                onChange={handleSelect}
+                direction="vertical"
+                showDateDisplay={false}
+              />
+              <button
+                onClick={handleBook}
+                className="w-full cursor-pointer bg-green-500 text-white px-4 py-2 mt-6 rounded-md ease-in transition hover:bg-green-600"
+              >
+                BOOK NOW
+              </button>
+            </div>
+          </div>
+        ) : (
+          <h1 className="mt-5 text-red-500 font-bold">
+            Property Currently Not Available for Rental Bookings
+          </h1>
+        )}
+      </div>
     </div>
   );
 };

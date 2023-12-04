@@ -79,7 +79,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters }) => {
                 className="p-2 border border-gray-300 w-full"
               >
                 <option value="">Select Property Type</option>
-                <option value="sell">For Sale</option>
+                <option value="sale">For Sale</option>
                 <option value="rent">For Rent</option>
               </select>
             </div>

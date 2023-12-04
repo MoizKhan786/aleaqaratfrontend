@@ -5,10 +5,16 @@ import PropertyCard from "../components/PropertyCard";
 import Login from "./Login";
 import Axios from "axios";
 import { API_URL } from "../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = ({ username, isAuthenticated }) => {
   const [properties, setProperties] = useState([]);
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/signup");
+    }
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {

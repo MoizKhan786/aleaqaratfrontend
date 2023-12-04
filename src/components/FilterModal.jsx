@@ -12,6 +12,11 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters }) => {
       propertyType,
     });
   };
+  const handleClear = () => {
+    setPriceRange({ min: "", max: "" });
+    setLocation("");
+    setPropertyType("");
+  };
 
   return (
     <div
@@ -87,9 +92,15 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters }) => {
           <div className="bg-gray-100 p-4 flex justify-end">
             <button
               onClick={handleApplyClick}
-              className="px-4 py-2 bg-blue-500 text-white"
+              className="px-4 py-2 mx-2 bg-blue-500 text-white"
             >
               Apply Filters
+            </button>
+            <button
+              onClick={handleClear}
+              className="px-4 py-2 bg-blue-500 text-white"
+            >
+              Clear Filters
             </button>
             <button
               onClick={onClose}

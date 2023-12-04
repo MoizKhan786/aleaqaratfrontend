@@ -37,7 +37,7 @@ const Register = () => {
         if (response.status === 200) {
           console.log("User registered successfully:", data);
           alert("User has been successfully added!!");
-          navigate("/");
+          navigate("/login");
         } else {
           alert("Registration failed");
         }

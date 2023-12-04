@@ -34,6 +34,9 @@ const Login = () => {
         }
       } catch (error) {
         console.error("Error:", error);
+        if (error.response.status === 401) {
+          alert(error.response.data.error);
+        }
       }
     },
   });

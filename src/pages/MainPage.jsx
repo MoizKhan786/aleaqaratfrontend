@@ -31,7 +31,6 @@ const MainPage = ({ username, isAuthenticated }) => {
         }
 
         const data = response.data;
-        console.log(data);
         setProperties(data.properties);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -48,13 +47,13 @@ const MainPage = ({ username, isAuthenticated }) => {
     >
       <Navbar username={username} />
       <SearchAndFilter properties={properties} setProperties={setProperties} />
-      {properties.length === 0 ? (
+      {properties?.length === 0 ? (
         <div className="container mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <h1 className="text-white">LOADING...</h1>
+          <h1 className="text-white">Loading Properties...</h1>
         </div>
       ) : (
         <div className="container mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.map((property) => (
+          {properties?.map((property) => (
             <PropertyCard key={property.propertyId} property={property} />
           ))}
         </div>

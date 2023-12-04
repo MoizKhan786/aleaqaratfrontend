@@ -72,8 +72,10 @@ const PropertyDetails = () => {
       );
 
       console.log("Booking successful:", response.data);
+      alert("Property Booked Successfully!");
     } catch (error) {
       console.error("Error booking property:", error);
+      alert(error.response.data.error);
     }
   };
 
@@ -104,10 +106,12 @@ const PropertyDetails = () => {
       <button className="bg-green-500 text-white px-4 py-2 mt-6 rounded-md ease-in transition hover:bg-green-600">
         Enquiry
       </button>
-      {property?.property?.type === "rent" && !property?.property?.isBooked ? (
+      {property?.property?.type === "rent" ? (
         <div className="mt-5">
           <h2 className="mt-5 flex justify-center mb-5 text-black font-bold">
-            Book Your Property
+            {property?.property?.isBooked
+              ? "Property is currently booked. You can book for future dates"
+              : "Book Your Property"}
           </h2>
           <div className="flex flex-col gap-5 justify-center items-center">
             <DateRangePicker

@@ -34,7 +34,8 @@ const List = () => {
 
       fileReader.onload = async (event) => {
         try {
-          const base64String = event.target.result;
+          console.log(event.target);
+          const base64String = event.target.result.split(",")[1];
 
           const imageObject = {
             data: base64String,

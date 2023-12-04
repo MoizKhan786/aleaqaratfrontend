@@ -16,10 +16,11 @@ const PropertyCard = ({ property }) => {
         <div className="md:flex">
           <div className="md:flex-shrink-0">
             <img
-              className="h-72 w-42 object-cover md:w-48"
+              className="h-52 w-36 object-cover md:w-48"
               src={property.imageKey}
               alt="Property"
             />
+            {console.log(property.imageKey)}
           </div>
           <div className="p-8 flex-none w-72 h-72 flex-shrink-0">
             <div
@@ -41,7 +42,7 @@ const PropertyCard = ({ property }) => {
             {console.log(property.type === "rent" && property.isBooked)}
             {property.type === "rent" ? (
               property.isBooked ? (
-                <p className="text-red-600">Booked</p>
+                <p className="text-red-600">Currently Booked</p>
               ) : (
                 <p className="text-green-500">Book Now</p>
               )
